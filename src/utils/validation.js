@@ -43,7 +43,7 @@ export function validateRegister(values) {
 
   return errors;
 }
-export function validateLoginField(name, value, values) {
+export function validateLoginField(name, value) {
   switch (name) {
     case "email":
       if (!value.trim()) return "Email is required";
