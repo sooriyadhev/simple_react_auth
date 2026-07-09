@@ -43,3 +43,44 @@ export function validateRegister(values) {
 
   return errors;
 }
+export function validateLoginField(name, value, values) {
+  switch (name) {
+    case "email":
+      if (!value.trim()) return "Email is required";
+      if (!/\S+@\S+\.\S+/.test(value)) return "Enter a valid email";
+      return "";
+
+    case "password":
+      if (!value.trim()) return "Password is required";
+      if (value.length < 8) return "Password must be at least 8 characters";
+      return "";
+
+    default:
+      return "";
+  }
+}
+export function validateRegisterField(name, value, values) {
+  switch (name) {
+    case "name":
+      if (!value.trim()) return "Name is required";
+      return "";
+
+    case "email":
+      if (!value.trim()) return "Email is required";
+      if (!/\S+@\S+\.\S+/.test(value)) return "Enter a valid email";
+      return "";
+
+    case "password":
+      if (!value.trim()) return "Password is required";
+      if (value.length < 8) return "Password must be at least 8 characters";
+      return "";
+
+    case "confirmPassword":
+      if (!value.trim()) return "Confirm your password";
+      if (value !== values.password) return "Passwords do not match";
+      return "";
+
+    default:
+      return "";
+  }
+}

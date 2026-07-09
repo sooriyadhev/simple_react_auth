@@ -1,7 +1,8 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import Button from "./Button";
-import { validateLogin } from "../utils/validation";
+import { FaEye,FaEyeSlash } from "react-icons/fa";
+import {validateLogin,validateLoginField} from "../utils/validation";
 
 function LoginForm() {
   const [values, setValues] = useState({
@@ -13,12 +14,23 @@ function LoginForm() {
 
   const [success, setSuccess] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+
   function handleChange(e) {
     const { name, value } = e.target;
 
     setValues((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  }
+
+  function handleBlur(e){
+    const {name,value} = e.target;
+    const error = validateLoginField(name,value,values);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
     }));
   }
 
@@ -49,17 +61,21 @@ function LoginForm() {
         placeholder="Enter your email"
         value={values.email}
         onChange={handleChange}
+        onBlur={handleBlur}
         error={errors.email}
       />
 
       <InputField
         label="Password"
-        type="password"
+        type={showPassword ? "text" : "password"}
         name="password"
         placeholder="Enter your password"
         value={values.password}
         onChange={handleChange}
+        onBlur={handleBlur}
         error={errors.password}
+        icon={showPassword ? <FaEyeSlash/> : <FaEye/>}
+        onIconClick={() => setShowPassword(!showPassword)}
       />
 
       <Button

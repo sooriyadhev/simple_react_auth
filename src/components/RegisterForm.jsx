@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import Button from "./Button";
-import { validateRegister } from "../utils/validation";
+import { validateRegister,validateRegisterField } from "../utils/validation";
 
 function RegisterForm() {
   const [values, setValues] = useState({
@@ -20,6 +20,15 @@ function RegisterForm() {
     setValues((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  }
+
+  function handleBlur(e){
+    const {name,value} = e.target;
+    const error = validateRegisterField(name,value,values);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
     }));
   }
 
@@ -49,6 +58,7 @@ function RegisterForm() {
         value={values.name}
         placeholder="Enter your name"
         onChange={handleChange}
+        onBlur={handleBlur}
         error={errors.name}
       />
 
@@ -59,6 +69,7 @@ function RegisterForm() {
         value={values.email}
         placeholder="Enter your email"
         onChange={handleChange}
+        onBlur={handleBlur}
         error={errors.email}
       />
 
@@ -69,6 +80,7 @@ function RegisterForm() {
         value={values.password}
         placeholder="Enter your password"
         onChange={handleChange}
+        onBlur={handleBlur}
         error={errors.password}
       />
 
@@ -79,6 +91,7 @@ function RegisterForm() {
         value={values.confirmPassword}
         placeholder="Confirm your password"
         onChange={handleChange}
+        onBlur={handleBlur}
         error={errors.confirmPassword}
       />
 
